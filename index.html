@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmazeAim 🎯 | Low Latency Utility</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --accent-primary: #00f2ff; /* Quake/Cyber */
+            --accent-secondary: #7000ff; /* Kovaaks Purple */
+            --text-color: #e0e0e0;
+            --panel-bg: rgba(20, 20, 25, 0.8);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto Mono', monospace;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 3D Canvas Container */
+        #aim-trainer-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: radial-gradient(circle, #1a1a2e 0%, #0a0a0c 100%);
+            border-bottom: 2px solid var(--accent-secondary);
+        }
+
+        #ui-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            pointer-events: none;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--accent-primary);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .highlight { color: var(--accent-secondary); }
+
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #000;
+            padding: 15px;
+            border-left: 4px solid var(--accent-secondary);
+            font-size: 0.9rem;
+            overflow-x: auto;
+            color: #00ff41; /* Matrix/Console style */
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--accent-secondary), var(--accent-primary));
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            border-radius: 2px;
+            transition: 0.3s;
+            text-align: center;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        .social-links img {
+            height: 35px;
+            margin: 10px 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #222;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Grid Effect */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(112, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(112, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div id="aim-trainer-container">
+    <div id="ui-overlay">
+        SCORE: <span id="score">0</span><br>
+        TIME: <span id="timer">30</span>
+    </div>
+    <div style="position:absolute; bottom:20px; right:20px; color:rgba(255,255,255,0.3); font-size:12px;">
+        * CLICK THE SPHERES TO WARM UP *
+    </div>
+</div>
+
+<div class="container">
+    <header style="text-align: center; margin-bottom: 50px;">
+        <h1>AmazeAim <span class="highlight">🎯</span></h1>
+        <p>Zero Latency. Pure Performance.</p>
+        <div style="margin-top: 20px;">
+            <a href="https://github.com/Adiru3/AmezeAim/releases/download/Latest/AmazeAim.exe" class="btn">DOWNLOAD .EXE</a>
+            <a href="https://github.com/Adiru3/AmezeAim" class="btn" style="background: #222;">GITHUB REPO</a>
+        </div>
+    </header>
+
+    <div class="panel">
+        <p><strong>AmazeAim</strong> is a lightweight system utility designed for competitive gamers to minimize mouse input lag and stabilize polling rate consistency on Windows. By optimizing CPU scheduling, power delivery, and process priorities, it ensures that your mouse data reaches your game with the lowest possible latency.</p>
+    </div>
+
+    <h2>🚀 Key Features</h2>
+    <div class="panel">
+        <ul class="feature-list">
+            <li><strong>Process Priority & Affinity:</strong> Automatically detects mouse drivers (LGHUB, Razer, SteelSeries, etc.) and sets them to High Priority, pinning them to specific CPU cores.</li>
+            <li><strong>System Responsiveness:</strong> Tweaks Win32PrioritySeparation to favor short, high-speed input tasks.</li>
+            <li><strong>USB Power Optimization:</strong> Forces USB ports to stay in high-performance mode.</li>
+            <li><strong>BCDEDIT Tweaks:</strong> Disables Dynamic Tick and forces Platform Tick (HPET) for stable timing.</li>
+            <li><strong>Stealth Mode:</strong> Runs silently in the System Tray with minimal footprint.</li>
+        </ul>
+    </div>
+
+    <h2>🛠️ How it works</h2>
+    <div class="panel">
+        <ol>
+            <li><strong>Registry Level:</strong> Adjusts the Windows Scheduler to prioritize input.</li>
+            <li><strong>Power Level:</strong> Modifies the current Power Plan for maximum USB performance.</li>
+            <li><strong>Process Level:</strong> Every 30 seconds, it ensures your mouse software is running on the most efficient CPU cores.</li>
+        </ol>
+    </div>
+
+    <h2>💻 Compilation</h2>
+    <div class="panel">
+        <p>Build it yourself using the .NET compiler:</p>
+        <div class="code-block">
+            C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /target:winexe /out:AmazeAim.exe /reference:System.Windows.Forms.dll /reference:System.Drawing.dll AmazeAim.cs
+        </div>
+    </div>
+
+    <div class="social-links" style="text-align: center; margin-top: 40px;">
+        <h2>🔗 Connect with me</h2>
+        <a href="https://www.youtube.com/@adiruaim"><img src="https://img.shields.io/badge/YouTube-@adiruaim-FF0000?style=for-the-badge&logo=youtube" alt="YouTube"></a>
+        <a href="https://www.tiktok.com/@adiruhs"><img src="https://img.shields.io/badge/TikTok-@adiruhs-000000?style=for-the-badge&logo=tiktok" alt="TikTok"></a>
+        <a href="https://donatello.to/Adiru3"><img src="https://img.shields.io/badge/Support-Donatello-orange?style=for-the-badge" alt="Donatello"></a>
+    </div>
+
+    <footer>
+        &copy; 2026 AmazeAim by Adiru3. Optimize your potential.
+    </footer>
+</div>
+
+<script>
+    // --- 3D AIM TRAINER LOGIC ---
+    let scene, camera, renderer, sphere;
+    let score = 0;
+    let timeLeft = 30;
+    const container = document.getElementById('aim-trainer-container');
+
+    function init() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, container.offsetWidth / 500, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.offsetWidth, 500);
+        container.appendChild(renderer.domElement);
+
+        // Lighting
+        const light = new THREE.PointLight(0x00f2ff, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        // Create Sphere
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshPhongMaterial({ 
+            color: 0x7000ff, 
+            emissive: 0x200040,
+            shininess: 100 
+        });
+        sphere = new THREE.Mesh(geometry, material);
+        moveSphere();
+        scene.add(sphere);
+
+        camera.position.z = 10;
+
+        // Click Detection
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        container.addEventListener('mousedown', (event) => {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children);
+
+            if (intersects.length > 0) {
+                score++;
+                document.getElementById('score').innerText = score;
+                moveSphere();
+            }
+        });
+
+        animate();
+        setInterval(updateTimer, 1000);
+    }
+
+    function moveSphere() {
+        sphere.position.x = (Math.random() - 0.5) * 12;
+        sphere.position.y = (Math.random() - 0.5) * 6;
+        sphere.position.z = (Math.random() - 0.5) * 5;
+    }
+
+    function updateTimer() {
+        if (timeLeft > 0) {
+            timeLeft--;
+            document.getElementById('timer').innerText = timeLeft;
+        } else {
+            // Reset game
+            timeLeft = 30;
+            score = 0;
+            document.getElementById('score').innerText = score;
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        sphere.rotation.y += 0.01;
+        renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+        camera.aspect = container.offsetWidth / 500;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.offsetWidth, 500);
+    });
+
+    init();
+</script>
+
+</body>
+</html>
