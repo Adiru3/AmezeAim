@@ -10,7 +10,6 @@
 * **System Responsiveness:** Tweaks `Win32PrioritySeparation` and `SystemResponsiveness` to favor short, high-speed input tasks.
 * **USB Power Optimization:** Forces USB ports to stay in high-performance mode, preventing "Selective Suspend" which causes micro-stutters.
 * **BCDEDIT Tweaks:** Disables `Dynamic Tick` and forces `Platform Tick` (HPET) for stable, jitter-free timing.
-* **Debug Console:** Real-time logging to monitor which optimizations are active and see driver boosting in action.
 * **Stealth Mode:** Runs silently in the System Tray with minimal CPU and RAM footprint.
 
 ---
@@ -40,5 +39,11 @@ AmazeAim applies a combination of registry edits, system command executions, and
 
 If you want to build it yourself using the built-in .NET compiler:
 
-```cmd
-C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /target:winexe /out:AmazeAim.exe /reference:System.Windows.Forms.dll /reference:System.Drawing.dll AmazeAim.cs
+
+```C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /target:winexe /out:AmazeAim.exe /reference:System.Windows.Forms.dll /reference:System.Drawing.dll AmazeAim.cs```
+
+## 🔗 Connect with me
+
+[![YouTube](https://img.shields.io/badge/YouTube-@adiruaim-FF0000?style=for-the-badge&logo=youtube)](https://www.youtube.com/@adiruaim)
+[![TikTok](https://img.shields.io/badge/TikTok-@adiruhs-000000?style=for-the-badge&logo=tiktok)](https://www.tiktok.com/@adiruhs)
+[![Donatello](https://img.shields.io/badge/Support-Donatello-orange?style=for-the-badge)](https://donatello.to/Adiru3)
