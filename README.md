@@ -52,7 +52,8 @@ If you want to build it yourself using the built-in .NET compiler:
 * **Solana:** `5r2H3R2wXmA1JimpCypmoWLh8eGmdZA6VWjuit3AuBkq`
 * **USDT (TRC20):** `TNgFjGzbGxztHDcSHx9DEPmQLxj2dWzozC`
 * **USDT (TON):** `UQC5fsX4zON_FgW4I6iVrxVDtsVwrcOmqbjsYA4TrQh3aOvj`
-* 
+
 ### 🌍 Support Links
 [![Donatello](https://img.shields.io/badge/Support-Donatello-orange?style=for-the-badge)](https://donatello.to/Adiru3)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-blue?style=for-the-badge&logo=kofi)](https://ko-fi.com/adiru)
+[![Steam](https://img.shields.io/badge/Steam-Trade-blue?style=for-the-badge&logo=steam)]([https://ko-fi.com/adiru](https://steamcommunity.com/tradeoffer/new/?partner=1124211419&token=2utLCl48))
